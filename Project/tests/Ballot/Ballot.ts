@@ -22,7 +22,7 @@ describe("Ballot", function () {
   let ballotContract: Ballot;
   let accounts: any[];
 
-  this.beforeEach(async function () {
+  beforeEach(async function () {
     accounts = await ethers.getSigners();
     const ballotFactory = await ethers.getContractFactory("Ballot");
     ballotContract = await ballotFactory.deploy(
