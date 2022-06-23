@@ -62,7 +62,8 @@ describe("Ballot", function () {
   describe("when the chairperson interacts with the giveRightToVote function in the contract", function () {
     it("gives right to vote for another address", async function () {
       const voterAddress = accounts[1].address;
-      await giveRightToVote(ballotContract, voterAddress);
+      const tx = await ballotContract.giveRightToVote(voterAddress);
+      await tx.wait();
       const voter = await ballotContract.voters(voterAddress);
       expect(voter.weight.toNumber()).to.eq(1);
     });
@@ -76,7 +77,7 @@ describe("Ballot", function () {
       ).to.be.revertedWith("The voter already voted.");
     });
 
-    it("can not give right to vote for someone that has already voting rights", async function () {
+    it("can not give right to vote for someone that already has voting rights", async function () {
       const voterAddress = accounts[1].address;
       await giveRightToVote(ballotContract, voterAddress);
       await expect(
